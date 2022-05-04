@@ -12,7 +12,9 @@ espacio=[ ,\t,\r,\n]+
 %}
 %%
 
-private | class | if | else | static | return | interface |
+private | class | if | else | static | return | interface | try | catch | finally | 
+for | for each | while | elif | continue | break | return | throws | NaN | Infinity |
+null | true | false | implementes | class | new | method | super | objectof | import | package |
 while {lexeme=yytext(); return Reservadas;}
 
 {espacio} {/*Ignore*/}
