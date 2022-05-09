@@ -4,11 +4,23 @@
  */
 package codigo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author clara
  */
 public class Ventana extends javax.swing.JFrame {
+    
+    int indiceNumero=0, indiceSuma=0, indiceResta=0, indiceMultiplicacion=0, indiceDivision=0, indiceResiduo=0;
 
     /**
      * Creates new form Ventana
@@ -28,9 +40,10 @@ public class Ventana extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEntrada = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtResultado = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -55,8 +68,13 @@ public class Ventana extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 450, 60));
+        txtEntrada.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEntradaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 450, 60));
 
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -69,8 +87,11 @@ public class Ventana extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 100, 40));
 
-        jTextField2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 590, 130));
+        txtResultado.setColumns(20);
+        txtResultado.setRows(5);
+        jScrollPane2.setViewportView(txtResultado);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 590, 110));
 
         jTabbedPane1.addTab("Analizador Léxico", jPanel2);
 
@@ -79,13 +100,59 @@ public class Ventana extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Número", "Suma", "Resta", "Multiplicación", "División", "Residuo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -136,9 +203,103 @@ public class Ventana extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void limpiarTabla() {
+        int filas = jTable1.getRowCount();
+        int columnas = jTable1.getColumnCount();
+        for (int i = 0; i < filas; i++) {
+            for(int j = 0; j < columnas; j++) {
+               jTable1.setValueAt(null, i, j);
+            }
+        }
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        indiceNumero = 0;
+        indiceSuma = 0;
+        indiceResta = 0;
+        indiceMultiplicacion = 0;
+        indiceDivision = 0;
+        indiceResiduo = 0;
+        
+        limpiarTabla();
+        
+        File archivo = new File("archivo.txt");
+        PrintWriter escribir;
+        try {
+            escribir = new PrintWriter(archivo);
+            escribir.print(txtEntrada.getText());
+            escribir.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            Reader lector = new BufferedReader(new FileReader("archivo.txt"));
+            Lexer lexer = new Lexer(lector);
+            String resultado = "";
+            while (true) {
+                Tokens tokens = lexer.yylex();
+                if (tokens == null) {
+                    resultado += "FIN";
+                    txtResultado.setText(resultado);
+                    return;
+                }
+                switch (tokens) {
+                    case ERROR:
+                        resultado += "Simbolo no definido\n";
+                        break;
+                    case Identificador: case Numero: case Reservadas:
+                        resultado += lexer.lexeme + ": Es un " + tokens + "\n";
+                        jTable1.setValueAt(""+lexer.lexeme, indiceNumero, 0);
+                        indiceNumero+=1;
+                        break;
+                        
+                    case Suma:
+                        resultado += "+: Es una suma \n";
+                        jTable1.setValueAt("+", indiceSuma, 1);
+                        indiceSuma+=1;
+                        break;
+
+                    case Resta:
+                        resultado += "-: Es una resta \n";
+                        jTable1.setValueAt("-", indiceResta, 2);
+                        indiceResta+=1;
+                        break;
+
+                    case Multiplicacion:
+                        resultado += "*: Es una multiplicacion \n";
+                        jTable1.setValueAt("*", indiceMultiplicacion, 3);
+                        indiceMultiplicacion+=1;
+                        break;
+
+                    case Division:
+                        resultado += "/: Es una division \n";
+                        jTable1.setValueAt("/", indiceDivision, 4);
+                        indiceDivision+=1;
+                        break;
+
+                    case Residuo:
+                        resultado += "%: Es un residuo \n";
+                        jTable1.setValueAt("%", indiceResiduo, 5);
+                        indiceResiduo+=1;
+                        break;
+
+                    default:
+                        resultado += "Token: " + tokens + "\n";
+                        break;
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEntradaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,9 +350,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtEntrada;
+    private javax.swing.JTextArea txtResultado;
     // End of variables declaration//GEN-END:variables
 }

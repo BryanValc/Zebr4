@@ -21,6 +21,7 @@ public enum Tokens {
     Suma,
     Division,
     Resta,
-    Multiplicacion
+    Multiplicacion,
+    Residuo
 
 }
