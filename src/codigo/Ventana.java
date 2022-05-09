@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Ventana extends javax.swing.JFrame {
      */
     public Ventana() {
         initComponents();
+        
     }
 
     /**
@@ -40,10 +42,10 @@ public class Ventana extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        txtEntrada = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextArea();
+        txtEntrada = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -68,14 +70,6 @@ public class Ventana extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(102, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtEntrada.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEntradaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 450, 60));
-
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -92,6 +86,14 @@ public class Ventana extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtResultado);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 590, 110));
+
+        txtEntrada.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEntradaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 450, 100));
 
         jTabbedPane1.addTab("Analizador Léxico", jPanel2);
 
@@ -247,46 +249,46 @@ public class Ventana extends javax.swing.JFrame {
                 }
                 switch (tokens) {
                     case ERROR:
-                        resultado += "Simbolo no definido\n";
-                        break;
-                    case Identificador: case Numero: case Reservadas:
                         resultado += lexer.lexeme + ": Es un " + tokens + "\n";
+                        break;
+                    case Numero:
+                        //resultado += lexer.lexeme + ": Es un " + tokens + "\n";
                         jTable1.setValueAt(""+lexer.lexeme, indiceNumero, 0);
                         indiceNumero+=1;
                         break;
                         
                     case Suma:
-                        resultado += "+: Es una suma \n";
+                        //resultado += "+: Es una suma \n";
                         jTable1.setValueAt("+", indiceSuma, 1);
                         indiceSuma+=1;
                         break;
 
                     case Resta:
-                        resultado += "-: Es una resta \n";
+                        //resultado += "-: Es una resta \n";
                         jTable1.setValueAt("-", indiceResta, 2);
                         indiceResta+=1;
                         break;
 
                     case Multiplicacion:
-                        resultado += "*: Es una multiplicacion \n";
+                        //resultado += "*: Es una multiplicacion \n";
                         jTable1.setValueAt("*", indiceMultiplicacion, 3);
                         indiceMultiplicacion+=1;
                         break;
 
                     case Division:
-                        resultado += "/: Es una division \n";
+                        //resultado += "/: Es una division \n";
                         jTable1.setValueAt("/", indiceDivision, 4);
                         indiceDivision+=1;
                         break;
 
                     case Residuo:
-                        resultado += "%: Es un residuo \n";
+                        //resultado += "%: Es un residuo \n";
                         jTable1.setValueAt("%", indiceResiduo, 5);
                         indiceResiduo+=1;
                         break;
 
                     default:
-                        resultado += "Token: " + tokens + "\n";
+                        //resultado += "Token: " + tokens + "\n";
                         break;
                 }
             }

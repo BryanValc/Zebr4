@@ -5,6 +5,8 @@ import static codigo.Tokens.*;
 %class Lexer
 %type Tokens
 D=([0-9])+
+P=[\-,\+]
+O=[\*,\/,\%]
 espacio=[ ,\t,\r,\n]+
 %{
     public String lexeme;
@@ -12,7 +14,7 @@ espacio=[ ,\t,\r,\n]+
 %%
 
 {espacio} {/*Ignore*/}
-"//".* {/*Ignore*/}
+
 "=" {return Igual;}
 "+" {return Suma;}
 "-" {return Resta;}
@@ -21,4 +23,4 @@ espacio=[ ,\t,\r,\n]+
 "%" {return Residuo;}
 
 {D}+("."{D}+)? {lexeme=yytext(); return Numero;}
- . {return ERROR;}
+{P}{O}|"."{P}+|"."{O}+|{O}{O}+ {lexeme=yytext(); return ERROR;}
