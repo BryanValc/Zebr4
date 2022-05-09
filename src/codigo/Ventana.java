@@ -233,7 +233,7 @@ public class Ventana extends javax.swing.JFrame {
             escribir.print(txtEntrada.getText());
             escribir.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
@@ -293,9 +293,9 @@ public class Ventana extends javax.swing.JFrame {
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -4,6 +4,7 @@ import static codigo.Tokens.*;
 %%
 %class Lexer
 %type Tokens
+L=[a-zA-Z_]+
 D=([0-9])+
 P=[\-,\+]
 O=[\*,\/,\%]
@@ -23,4 +24,4 @@ espacio=[ ,\t,\r,\n]+
 "%" {return Residuo;}
 
 {D}+("."{D}+)? {lexeme=yytext(); return Numero;}
-{P}{O}|"."{P}+|"."{O}+|{O}{O}+ {lexeme=yytext(); return ERROR;}
+{L}*|{P}{O}|"."{P}+|"."{O}+|{O}{O}+ {lexeme=yytext(); return ERROR;}
