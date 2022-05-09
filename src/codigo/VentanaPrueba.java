@@ -46,6 +46,11 @@ public class VentanaPrueba extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtEntrada.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEntradaActionPerformed(evt);
+            }
+        });
 
         btnAnalizar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnAnalizar.setText("Analizar");
@@ -129,6 +134,10 @@ public class VentanaPrueba extends javax.swing.JFrame {
             Logger.getLogger(VentanaPrueba.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAnalizarActionPerformed
+
+    private void txtEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEntradaActionPerformed
 
     /**
      * @param args the command line arguments
