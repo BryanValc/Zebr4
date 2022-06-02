@@ -24,4 +24,9 @@ espacio=[ ,\t,\r,\n]+
 "%" {return Residuo;}
 
 {D}+("."{D}+)? {lexeme=yytext(); return Numero;}
-{L}*|{P}{O}|"."{P}+|"."{O}+|{O}{O}+ {lexeme=yytext(); return ERROR;}
+{L}* {lexeme=yytext(); return ERROR;}
+{P}{O} {lexeme=yytext(); return ErrorOperador;}
+"."{P}+|"."{O}+ {lexeme=yytext(); return ErrorPuntoOperador;}
+{O}{O}+ {lexeme=yytext(); return ErrorMultiplesOperadores;}
+"."+ {lexeme=yytext(); return ErrorMultipunto;}
+"/""0"+(".""0"+)? {lexeme=yytext(); return ErrorDivZero;}

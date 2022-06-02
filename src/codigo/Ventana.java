@@ -225,6 +225,18 @@ public class Ventana extends javax.swing.JFrame {
      * 
      * @param args the command line arguments
      */
+    private int lastError = 0;
+    private int lastErrorLength = 0;
+    private String getErrorIndex(Lexer lexer){                                  //substring de entrada que comienza desde el índice del último error más su longitud
+                                                                                                                                //suma el índice y la longitud del último error para dar un mensaje más preciso
+        int beginError = (Integer.parseInt(""+txtEntrada.getText().substring(lastError+lastErrorLength).indexOf(lexer.lexeme))+1+lastError+lastErrorLength);
+        int endError = beginError+lexer.lexeme.length()-1;
+        String ret = "Error en las columnas "+beginError+"-"+endError+"; ";
+        lastErrorLength = lexer.lexeme.length();
+        lastError += (Integer.parseInt(""+txtEntrada.getText().substring(lastError+lastErrorLength).indexOf(lexer.lexeme))+lastError+lastErrorLength);
+        return ret;
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         // En esta sección se regresan los indices que se usan para la tabla a su estado
         // por defecto
@@ -234,6 +246,8 @@ public class Ventana extends javax.swing.JFrame {
         indiceMultiplicacion = 0;
         indiceDivision = 0;
         indiceResiduo = 0;
+        lastError = 0;          //para reestablecer el indice del último error y la longitud del mismo
+        lastErrorLength = 0;
 
         limpiarTabla();
 
@@ -261,8 +275,27 @@ public class Ventana extends javax.swing.JFrame {
                     return;
                 }
                 switch (tokens) {
+                    case ErrorOperador:
+                        resultado += getErrorIndex(lexer) + lexer.lexeme +  "\n Es un error de operador: no puedes poner más de un operador"
+                                + "\n       seguido a menos que sean de polaridades o que sea una un signo"
+                                + "\n       después de una operación como multiplicación y división\n";
+                        break;
+                    case ErrorPuntoOperador:
+                        resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error de punto operador: no puedes poner un operador después de un punto\n";
+                        break;
+                    case ErrorMultiplesOperadores:
+                        resultado += getErrorIndex(lexer) + "\n" + lexer.lexeme +  "  Es un error de multiples operadores: no puede haber 2 o más operadores juntos, "
+                                + "\n       a menos que sea una división/multiplicación seguida"
+                                + "\n       de 1 ó n cantidad de signos, o bien solamente n cantidad de signos\n";
+                        break;
+                    case ErrorMultipunto:
+                        resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error multipunto: no puedes poner 2 o más puntos segidos\n";
+                        break;
+                    case ErrorDivZero:
+                        resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error de división entre cero: no puedes dividir un número entre cero\n";
+                        break;
                     case ERROR:
-                        resultado += lexer.lexeme + ": Es un " + tokens + "\n";
+                        resultado += lexer.lexeme + " Es un " + tokens + "\n";
                         break;
                     case Numero:
                         // resultado += lexer.lexeme + ": Es un " + tokens + "\n";

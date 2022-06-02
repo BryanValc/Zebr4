@@ -22,6 +22,10 @@ public enum Tokens {
     Division,
     Resta,
     Multiplicacion,
-    Residuo
-
+    Residuo,
+    ErrorOperador,
+    ErrorPuntoOperador,
+    ErrorMultiplesOperadores,
+    ErrorMultipunto,
+    ErrorDivZero
 }
