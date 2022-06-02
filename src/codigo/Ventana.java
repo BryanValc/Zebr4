@@ -233,7 +233,7 @@ public class Ventana extends javax.swing.JFrame {
         int endError = beginError+lexer.lexeme.length()-1;
         String ret = "Error en las columnas "+beginError+"-"+endError+"; ";
         lastErrorLength = lexer.lexeme.length();
-        lastError += (Integer.parseInt(""+txtEntrada.getText().substring(lastError+lastErrorLength).indexOf(lexer.lexeme))+lastError+lastErrorLength);
+        lastError = (Integer.parseInt(""+txtEntrada.getText().substring(lastError+lastErrorLength).indexOf(lexer.lexeme))+lastError+lastErrorLength);
         return ret;
     }
     
@@ -289,7 +289,7 @@ public class Ventana extends javax.swing.JFrame {
                                 + "\n       de 1 ó n cantidad de signos, o bien solamente n cantidad de signos\n";
                         break;
                     case ErrorMultipunto:
-                        resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error multipunto: no puedes poner 2 o más puntos segidos\n";
+                        resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error multipunto: no puedes poner 2 o más puntos seguidos\n";
                         break;
                     case ErrorDivZero:
                         resultado += getErrorIndex(lexer) + lexer.lexeme + " Es un error de división entre cero: no puedes dividir un número entre cero\n";
